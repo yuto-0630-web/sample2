@@ -786,66 +786,23 @@ header{
 }
 
 }
-/* ====== join-flow をきれいに揃える・ズレ解消 ====== */
-.join-flow .flow{
-  display:grid;
-  grid-template-columns: 360px 1fr; /* 左の図 / 右の説明 */
-  column-gap:56px;
-  align-items:start;
+ul, ol { list-style: none; padding-left: 0; }
+li::marker { content: ""; }          /* 一部ブラウザでの保険 */
+.figure, .figure li { list-style: none; }
+
+/* 2) 幅ズレ防止（%幅 + padding でも合計100%に収まる） */
+*, *::before, *::after { box-sizing: border-box; }
+
+/* 3) 3カラムの計算ミスを解消（width固定をやめてflexで等分） */
+.main-contents { display:flex; gap:2%; padding: 0 2%; }
+.main-contents-left,
+.main-contents-middle,
+.main-contents-right {
+  flex: 1 1 0;      /* 等分 */
+  padding: 0 2%;
+  min-width: 0;     /* 折返し暴発防止 */
 }
 
-/* 左のタイムライン（赤帯＋灰ボックス） */
-.join-flow .figure{
-  position:relative;
-  display:grid;
-  grid-template-rows: repeat(4, 140px); /* 各段の高さ */
-  row-gap:64px;                          /* 段間の余白 */
-  justify-items:center;
-  align-items:center;
-  padding:8px 0 40px;
-}
-.join-flow .figure::before{
-  content:"";
-  position:absolute;
-  top:0; bottom:0;                        /* コンテナ全高に伸ばす */
-  left:50%; transform:translateX(-50%);
-  width:54px;                             /* 赤帯の太さ */
-  background:#a12b3d;
-  border-radius:2px;
-  z-index:0;
-}
-.join-flow .figure li{
-  position:relative;
-  z-index:1;                              /* 赤帯の上に出す */
-  width:320px; height:120px;              /* ボックスサイズ */
-  display:grid; place-items:center;       /* 文字を中央に */
-  background:#414141; color:#fff;
-  text-align:center; border-radius:10px;
-  line-height:1.4; padding:0; margin:0;   /* 余計なズレ防止 */
-}
-.join-flow .figure li::before{
-  display:none;                           /* 以前の下矢印を無効化（保険） */
-}
-.join-flow .figure li::after{
-  content:"";
-  position:absolute;
-  bottom:-22px; left:50%; transform:translateX(-50%);
-  border-top:22px solid #414141;          /* 下の三角（矢印） */
-  border-left:110px solid transparent;
-  border-right:110px solid transparent;
-}
-
-/* 右の説明側（見出しと本文の揃え） */
-.join-flow .description{ margin:6px 0 0; width:auto; }
-.join-flow .description dl,
-.join-flow .description dt,
-.join-flow .description dd{ margin:0; }   /* 既定余白をリセット */
-.join-flow .description dt{
-  display:flex; align-items:center; gap:12px;
-  font-size:1.25rem;
-  padding-bottom:8px;
-  border-bottom:1px solid #888;
-}
-.join-flow .description dd{
-  margin:14px 0 56px; line-height:1.8; color:#ddd;
-}
+/* 4) 擬要素の線色を明示（環境差異で黒くならないように） */
+.section-title::before,
+.section-title::after { border-top-color:#fff; }
