@@ -777,60 +777,87 @@ header{
 }
 
 }
-/* ===== モバイル最優先の上書き（<=960px） ===== */
+/* ===== design-lock: 上書きで見た目を固定 ===== */
+
+/* ベース（余白計算とタイポを安定） */
+*,*::before,*::after{ box-sizing:border-box }
+html{ font-size: 16px }
+body{ color:#fff; background:#000; line-height:1.7 }
+
+/* 共通コンテナ（本文の最大幅と左右余白） */
+.container, .main-container, .gym-container, .join-flow, .equipment, .price-section, .voice-section, .contact-section, footer{
+  max-width: 1200px;  /* 必要なら 1100–1280で調整 */
+  margin: 0 auto;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+/* --- join-flow を“意図した見た目”にロック --- */
+.join-flow .flow{
+  display: grid !important;
+  grid-template-columns: 360px 1fr; /* 左の図 / 右の説明 */
+  column-gap: 56px;
+  align-items: start;
+}
+
+/* 左：タイムライン */
+.join-flow .figure{
+  position: relative;
+  display: grid !important;
+  grid-auto-rows: 140px; /* 各段の高さ */
+  row-gap: 64px;         /* 段間 */
+  justify-items: center;
+  align-items: center;
+  padding: 8px 0 40px;
+}
+.join-flow .figure::before{
+  content:"";
+  position:absolute; top:0; bottom:0; left:50%;
+  transform:translateX(-50%);
+  width:54px; background:#a12b3d; border-radius:2px; z-index:0;
+}
+.join-flow .figure li{
+  position:relative; z-index:1;
+  width:320px; height:120px;
+  display:grid; place-items:center;
+  margin:0; padding:0;
+  background:#414141; color:#fff; border-radius:10px; text-align:center;
+}
+.join-flow .figure li::before{ /* 下三角 */
+  content:""; position:absolute; top:100%; left:50%; transform:translateX(-50%);
+  border-top:22px solid #414141; border-left:110px solid transparent; border-right:110px solid transparent;
+}
+
+/* 右：見出し/本文のリズム */
+.join-flow .description{ margin:0; width:auto }
+.join-flow .description dt,
+.join-flow .description dd{ margin:0 }
+.join-flow .description dt{
+  font-size:1.25rem; padding-bottom:8px; border-bottom:1px solid #888;
+}
+.join-flow .description dd{ margin:14px 0 56px; color:#ddd }
+
+/* リストのマーカーや予期せぬ数字を完全無効化 */
+.join-flow ol, .join-flow ul{ list-style:none; padding-left:0; margin:0 }
+.join-flow li::marker{ content:"" }
+
+/* モバイル：1カラム化＆中央寄せ */
 @media (max-width: 960px){
+  .header-contents{ position:sticky !important; top:0; left:0; right:0; width:100% !important; height:64px !important; display:flex !important; align-items:center; justify-content:space-between; background:#000; z-index:50 }
+  .container{ margin-left:0 !important }
 
-  /* サイドバーをヘッダー化する（確実に勝たせるため !important） */
-  .header-contents{
-    position: sticky !important;
-    top: 0; left: 0; right: 0;
-    width: 100% !important;
-    height: 64px !important;
-    display: flex !important;
-    align-items: center; justify-content: space-between;
-    background: #000;
-    z-index: 50;
+  .join-flow .flow{ display:block !important }
+  .join-flow .figure{
+    display:block !important; padding:24px 0 40px
   }
-
-  /* 本体を左余白なしに */
-  .container{ margin-left: 0 !important; }
-
-  /* ナビをオフキャンバスに（必要時のみ出す） */
-  #navi{
-    position: fixed; top:0; bottom:0; left:-300px;
-    width: 300px; padding: 24px; background:#000;
-    opacity: 0; transition: .35s;
-    z-index: 40;
+  .join-flow .figure::before{ width:36px }
+  .join-flow .figure li{
+    width:min(92%, 360px); height:auto; padding:18px 0; margin:0 auto 36px
   }
-  .open #navi{ left:0; opacity:1; }
-
-  /* join-flow を1カラムに */
-  .flow{ flex-direction: column !important; margin-top: 24px; }
-
-  .figure{
-    padding: 24px 0 40px;
+  .join-flow .figure li::before{
+    border-top:18px solid #414141; border-left:90px solid transparent; border-right:90px solid transparent; bottom:-18px; top:auto
   }
-  .figure li{
-    width: min(92%, 360px);
-    margin: 0 auto 40px;
-    height: auto;
-    padding: 18px 0;
-  }
-  .figure li::before{
-    /* 下三角の左右幅を画面幅に合わせて可変 */
-    border-left-width:  min(46vw, 180px);
-    border-right-width: min(46vw, 180px);
-  }
-
-  .description{
-    width: 100% !important;
-    margin: 10px 0 0 !important;
-    padding: 0 5%;
-  }
-  .description dt{
-    font-size: 1.1rem;
-    padding-bottom: 6px;
-    border-bottom: 1px solid #888;
-  }
-  .description dd{ margin: 10px 0 28px; line-height: 1.8; }
+  .join-flow .description{ width:100% !important; margin:10px 0 0 !important; padding:0 5% }
+  .join-flow .description dt{ font-size:1.1rem; padding-bottom:6px }
+  .join-flow .description dd{ margin:10px 0 28px }
 }
