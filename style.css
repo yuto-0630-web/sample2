@@ -864,3 +864,52 @@ header{
   .figure::before{ width: 36px; }  /* 少し細く */
   /* 既存の .figure li のSP指定はそのままでOK（中央寄せ＆幅は既に指定済み） */
 }
+
+/* 1) ブラウザ既定の余白を殺す（上部の白ライン対策） */
+html, body { margin: 0; padding: 0; }
+
+/* 2) ヒーロー画像：二重オフセットを解消して右端まで広げる */
+.container .introduce{
+  margin-left: 0 !important;              /* ← container の 300px を二重にしない */
+  width: calc(100vw - 300px) !important;  /* 画面幅 - 左サイド幅 */
+  max-width: none;
+  padding: 0;
+}
+.introduce .list, .introduce .list li{ height: 100vh; }
+.introduce .list li{
+  left: 0;               /* right:0 だと環境差でズレることがあるので左基準に */
+  right: auto;
+  opacity: 0;            /* 既存のアニメはそのまま */
+}
+.introduce .list img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* 3) タイムライン：赤帯を中央＆下まで。%間隔を固定値に */
+.join-flow .flow{ align-items: flex-start; }
+.figure{
+  width: 200px;              /* ← 今の箱幅に合わせて中央寄せ */
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 64px;                 /* margin-bottom:35% をやめる */
+}
+.figure::before{
+  content:"";
+  position:absolute;
+  top:0; bottom:0;           /* ← 親の高さいっぱい＝下まで */
+  left:50%; transform:translateX(-50%);
+  width:50px; height:auto;
+  background:#a12b3d; border-radius:2px; z-index:0;
+}
+.figure li{ margin-bottom:0 !important; z-index:1; } /* 赤帯より手前に */
+
+@media (max-width:960px){
+  /* SPは全幅でOK（ここはあなたの既存に合わせる） */
+  .container .introduce{ width:100vw !important; }
+}
+
