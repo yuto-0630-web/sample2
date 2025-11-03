@@ -819,4 +819,60 @@ header{
   border-left: 120px solid transparent;
 }
 
+/* ===== join-flow セクション専用レイアウトを再定義 ===== */
+.join-flow .flow{
+  display:grid;
+  grid-template-columns: 360px 1fr; /* 左: 図 / 右: 説明 */
+  column-gap:56px;
+  align-items:start;
+}
 
+/* 左の図(タイムライン) */
+.join-flow .figure{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:56px;               /* 各ボックスの間隔 */
+  padding:20px 0 40px;
+}
+.join-flow .figure::before{
+  content:"";
+  position:absolute;
+  top:0; bottom:0;        /* 図の全高に合わせて伸ばす */
+  left:50%; transform:translateX(-50%);
+  width:54px;
+  background:#a12b3d;     /* 縦の赤帯 */
+  border-radius:2px;
+  z-index:0;
+}
+.join-flow .figure li{
+  position:relative;
+  z-index:1;              /* 赤帯の上に出す */
+  width:320px;
+  padding:18px 0;         /* 内側余白 */
+  background:#414141;
+  color:#fff; text-align:center;
+  border-radius:8px;
+  line-height:1.4;
+}
+.join-flow .figure li::before{
+  content:"";
+  position:absolute; top:100%; left:50%; transform:translateX(-50%);
+  border-top:22px solid #414141;
+  border-left:110px solid transparent;
+  border-right:110px solid transparent;
+}
+
+/* 右の説明側 */
+.join-flow .description{ margin:0; width:auto; }
+.join-flow .description dt{
+  font-size:1.25rem;
+  border-bottom:1px solid #888;
+  padding-bottom:8px;
+}
+.join-flow .description dd{ margin:14px 0 40px; }
+
+/* 念のため：番号やマーカーを完全無効化（左上の「4」対策） */
+.join-flow ol, .join-flow ul{ list-style:none !important; padding-left:0 !important; margin:0; }
+.join-flow li::marker{ content:"" !important; font-size:0 !important; }
