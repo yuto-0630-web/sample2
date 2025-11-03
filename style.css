@@ -777,3 +777,60 @@ header{
 }
 
 }
+/* ===== モバイル最優先の上書き（<=960px） ===== */
+@media (max-width: 960px){
+
+  /* サイドバーをヘッダー化する（確実に勝たせるため !important） */
+  .header-contents{
+    position: sticky !important;
+    top: 0; left: 0; right: 0;
+    width: 100% !important;
+    height: 64px !important;
+    display: flex !important;
+    align-items: center; justify-content: space-between;
+    background: #000;
+    z-index: 50;
+  }
+
+  /* 本体を左余白なしに */
+  .container{ margin-left: 0 !important; }
+
+  /* ナビをオフキャンバスに（必要時のみ出す） */
+  #navi{
+    position: fixed; top:0; bottom:0; left:-300px;
+    width: 300px; padding: 24px; background:#000;
+    opacity: 0; transition: .35s;
+    z-index: 40;
+  }
+  .open #navi{ left:0; opacity:1; }
+
+  /* join-flow を1カラムに */
+  .flow{ flex-direction: column !important; margin-top: 24px; }
+
+  .figure{
+    padding: 24px 0 40px;
+  }
+  .figure li{
+    width: min(92%, 360px);
+    margin: 0 auto 40px;
+    height: auto;
+    padding: 18px 0;
+  }
+  .figure li::before{
+    /* 下三角の左右幅を画面幅に合わせて可変 */
+    border-left-width:  min(46vw, 180px);
+    border-right-width: min(46vw, 180px);
+  }
+
+  .description{
+    width: 100% !important;
+    margin: 10px 0 0 !important;
+    padding: 0 5%;
+  }
+  .description dt{
+    font-size: 1.1rem;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #888;
+  }
+  .description dd{ margin: 10px 0 28px; line-height: 1.8; }
+}
