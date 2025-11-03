@@ -777,3 +777,90 @@ header{
 }
 
 }
+
+/* ===== Heroを右端まで、サイド300pxを差し引いて全幅に ===== */
+.introduce{
+  margin-left: 300px;
+  width: calc(100vw - 300px);
+  max-width: none;
+  padding: 0;
+}
+.list li{ left: 0; } /* 右0だけだと環境でズレることがあるので 明示 */
+
+/* ===== タイムライン：赤帯センター＆下まで、縦間隔はgapで安定 ===== */
+.figure{
+  width: 200px;                 /* ← .figure li と同じ幅に固定（今は200px） */
+  margin: 0 auto;               /* センター */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 64px;                    /* 段間（%ではなく固定値に） */
+  position: relative;
+}
+.figure::before{
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;                    /* 親の高さいっぱい＝下まで伸びる */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;                  /* 帯の太さ（好みで調整） */
+  height: auto;                 /* 500px固定を打ち消す */
+  background-color: #a12b3d;
+  border-radius: 2px;
+  z-index: 0;
+}
+.figure li{
+  margin-bottom: 0 !important;  /* 35%を無効化。間隔はgapで管理 */
+  width: 200px;                 /* ここは現状と合わせる */
+  height: 80px;
+  display: grid;
+  place-items: center;
+  background-color: #414141;
+  color: #fff;
+  font-size: 1.3rem;
+  text-align: center;
+  position: relative;
+  z-index: 1;                   /* 赤帯より手前 */
+}
+.figure li::before{
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-top: 30px solid #414141;
+  border-right: 100px solid transparent;
+  border-left: 100px solid transparent;
+}
+
+/* ===== 設備カード：画像が枠から出ないように（枠はラッパーにつける） ===== */
+.e-list{ gap: 32px; }           /* %だと崩れやすいので固定値推奨（見た目同じならこのままでOK） */
+
+.list-left, .list-middle, .list-right{
+  flex: 1 1 0;
+  min-width: 0;                 /* 横あふれ防止のキモ */
+  border: 2px solid #a12b3d;    /* 枠はラッパー側に */
+  border-radius: 8px;
+  overflow: hidden;             /* はみ出しカット */
+  background: #111;
+}
+.list-left img,
+.list-middle img,
+.list-right img{
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;         /* 高さを一定に（対応広い） */
+  object-fit: cover;            /* 枠内でトリミング */
+  border: none !important;      /* 画像側の枠は消す */
+}
+
+/* ===== SP時は全幅に戻す（あなたの既存@mediaに追加上書き） ===== */
+@media (max-width:960px){
+  .introduce{ margin-left: 0; width: 100vw; }
+
+  .figure{ width: auto; gap: 40px; }
+  .figure::before{ width: 36px; }  /* 少し細く */
+  /* 既存の .figure li のSP指定はそのままでOK（中央寄せ＆幅は既に指定済み） */
+}
