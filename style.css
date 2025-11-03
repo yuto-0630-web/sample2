@@ -4,6 +4,8 @@ a{
     color: white;
 }
 
+html, body{ margin:0; padding:0; }
+
 li{
     list-style: none;
 }
@@ -247,21 +249,28 @@ li{
 
 .figure{
     position: relative;
+    width: 200px;          /* li と同じ幅にして中央配置 */
+    margin: 0 auto;
+    display: flex;         /* 段間は gap で安定 */
+    flex-direction: column;
+    gap: 64px;
 }
 
 .figure::before{
-    content: "";
-    width: 50px;
-    height: 500px;
-    background-color: #a12b3d;
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
+    content:"";
+    position:absolute;
+    top:0;
+    bottom:0;              /* ← これで“下まで”確実に届く */
+    left:50%;
+    transform:translateX(-50%);
+    width:50px;
+    height:auto;           /* 固定500pxを無効化 */
+    background:#a12b3d;
+    z-index:0;
 }
 
 .figure li{
-    margin-bottom: 35%;
+    margin-bottom: 0;
     line-height: 80px;
     width: 200px;
     height: 80px;
@@ -270,6 +279,7 @@ li{
     font-size: 1.3rem;
     text-align: center;
     position: relative;
+    z-index: 1;
 }
 
 .figure li::before{
@@ -776,4 +786,20 @@ header{
     padding-bottom: 10%;
 }
 
+}
+.list-left, .list-middle, .list-right{
+  border: 2px solid #a12b3d;
+  border-radius: 8px;
+  overflow: hidden;           /* ← これが効く */
+  background: #111;
+}
+.list-left img,
+.list-middle img,
+.list-right img{
+  display:block;
+  width:100%;
+  height:auto;
+  aspect-ratio: 16 / 9;       /* 高さを揃える。不要なら削ってOK */
+  object-fit:cover;
+  border: none !important;    /* 画像側の枠は消す */
 }
