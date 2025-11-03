@@ -787,19 +787,4 @@ header{
 }
 
 }
-.list-left, .list-middle, .list-right{
-  border: 2px solid #a12b3d;
-  border-radius: 8px;
-  overflow: hidden;           /* ← これが効く */
-  background: #111;
-}
-.list-left img,
-.list-middle img,
-.list-right img{
-  display:block;
-  width:100%;
-  height:auto;
-  aspect-ratio: 16 / 9;       /* 高さを揃える。不要なら削ってOK */
-  object-fit:cover;
-  border: none !important;    /* 画像側の枠は消す */
-}
+
