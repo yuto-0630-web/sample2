@@ -787,29 +787,7 @@ header{
 
 }
 
-
-/* 1) 余計な番号/点(左上の「4」) を完全に消す */
-ul, ol { list-style: none; padding-left: 0; }
-li::marker { content: ""; }          /* 一部ブラウザでの保険 */
-.figure, .figure li { list-style: none; }
-
-/* 2) 幅ズレ防止（%幅 + padding でも合計100%に収まる） */
-*, *::before, *::after { box-sizing: border-box; }
-
-/* 3) 3カラムの計算ミスを解消（width固定をやめてflexで等分） */
-.main-contents { display:flex; gap:2%; padding: 0 2%; }
-.main-contents-left,
-.main-contents-middle,
-.main-contents-right {
-  flex: 1 1 0;      /* 等分 */
-  padding: 0 2%;
-  min-width: 0;     /* 折返し暴発防止 */
-}
-
-/* 4) 擬要素の線色を明示（環境差異で黒くならないように） */
-.section-title::before,
-.section-title::after { border-top-color:#fff; }
-
+/* パディング＆高さ調整 */
 .figure { display:flex; flex-direction:column; align-items:center; gap:60px; padding:40px 0; }
 .figure li {
   width:240px; height:auto; padding:20px 0; line-height:1.6;
@@ -819,3 +797,4 @@ li::marker { content: ""; }          /* 一部ブラウザでの保険 */
   content:""; position:absolute; top:100%; left:50%; transform:translateX(-50%);
   border-top:25px solid #414141; border-right:120px solid transparent; border-left:120px solid transparent;
 }
+
