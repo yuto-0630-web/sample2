@@ -810,3 +810,49 @@ li::marker { content: ""; }          /* 一部ブラウザでの保険 */
 .section-title::before,
 .section-title::after { border-top-color:#fff; }
 
+/* ========== 番号「4」を完全に削除 ========== */
+ol, ul {
+  list-style: none !important;
+  counter-reset: none !important;
+}
+li::marker {
+  content: none !important;
+}
+.figure li::before,
+.figure li::after {
+  counter-reset: none !important;
+}
+
+/* ========== グレー背景（矢印ブロック）のズレ修正 ========== */
+.figure {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 60px; /* 要素の間隔 */
+  padding: 40px 0; /* 上下の余白追加 */
+}
+
+.figure li {
+  width: 240px;
+  height: auto; /* ← 高さ固定を解除 */
+  padding: 20px 0; /* ← 内側余白を追加 */
+  background-color: #414141;
+  color: #fff;
+  font-size: 1.3rem;
+  text-align: center;
+  position: relative;
+  border-radius: 4px;
+  line-height: 1.6;
+}
+
+.figure li::before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-top: 25px solid #414141;
+  border-right: 120px solid transparent;
+  border-left: 120px solid transparent;
+}
